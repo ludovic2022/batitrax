@@ -3,7 +3,7 @@
 ## Installation initiale
 1. Uploadez les dossiers `Batitrax`, `api`, et `install` à la racine de votre sous-domaine (pointant vers `Batitrax`).
 2. Exécutez `install/install.php` pour créer les tables `accounts` et `users` et l’utilisateur superadmin.
-3. Connectez-vous via `http://batitrax.menuiserie-rieu.fr` (login superadmin : ludovic.riquier@gmail.com / root).
+
 
 ## Mise à jour de schéma
 Après l’évolution, pour ajouter les tables `projects` et `messages`, exécutez :
