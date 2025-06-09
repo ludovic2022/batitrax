@@ -1,31 +1,28 @@
 <?php
 session_start();
 require_once 'config.php';
-if (!isset($_SESSION['user_id'])) exit('Unauthorized');
 $conn = getConnection();
-$action = $_GET['action'] ?? '';
-$stmt = $conn->prepare("SELECT role, account_id FROM users WHERE id=?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$action = $_REQUEST['action'] ?? '';
 
-switch($action) {
-    case 'create_project':
-        if ($user['role']==='admin') {
-            $name = $_POST['name'] ?? '';
-            if ($name) {
-                $stmt=$conn->prepare("INSERT INTO projects(name, account_id) VALUES(?,?)");
-                $stmt->execute([$name,$user['account_id']]);
-            }
-        }
-        break;
-    case 'send_message':
-        $pid = $_GET['project_id'];
-        $content = $_POST['content'] ?? '';
-        if ($content) {
-            $stmt=$conn->prepare("INSERT INTO messages(project_id, user_id, content) VALUES(?,?,?)");
-            $stmt->execute([$pid,$_SESSION['user_id'],$content]);
-        }
-        break;
+if ($action === 'create_project') {
+    // Only admin or superadmin
+    $userStmt = $conn->prepare("SELECT role, account_id FROM users WHERE id = ?");
+    $userStmt->execute([$_SESSION['user_id']]);
+    $usr = $userStmt->fetch(PDO::FETCH_ASSOC);
+    $account_id = $usr['role'] === 'admin' ? $usr['account_id'] : $_POST['account_id'];
+    $name = $_POST['name'];
+    $emoji = $_POST['emoji'] ?? null;
+    $address = $_POST['address'] ?? null;
+    $lat = $_POST['lat'] ?? null;
+    $lng = $_POST['lng'] ?? null;
+    $manager_id = $_POST['manager_id'] ?? null;
+    $stmt = $conn->prepare("
+        INSERT INTO projects (account_id, name, emoji, address, lat, lng, manager_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->execute([$account_id, $name, $emoji, $address, $lat, $lng, $manager_id]);
+    header('Location: ../Batitrax/dashboard.php');
+    exit;
 }
-header('Location: ../Batitrax/dashboard.php'.(isset($pid)?"?project_id=$pid":""));
+// existing other actions...
 ?>
