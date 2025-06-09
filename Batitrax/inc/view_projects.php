@@ -69,6 +69,40 @@
   </div>
 </section>
 
+<!-- Modal de création de projet -->
+<div id="createProjectModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h3>Nouveau projet</h3>
+    <form id="create-form" method="POST" action="../api/project.php?action=create_project">
+      <div class="emoji-grid">
+        <?php
+          $emojis = ['🏗️','🛠️','🚧','🏠','🔨','📐','📦','📝','🚀','💼','🎯','✅','📊','🗂️','📁','⚙️'];
+          foreach ($emojis as $e) {
+              echo '<span class="emoji-item" data-emoji="'.$e.'">'.$e.'</span>';
+          }
+        ?>
+      </div>
+      <input type="hidden" name="emoji" required>
+      <input type="text" name="name" placeholder="Nom du projet" required>
+      <input type="text" name="address" placeholder="Adresse" required>
+      <select name="manager_id" required>
+        <option value="">-- Responsable --</option>
+        <?php foreach($users as $u): ?>
+          <option value="<?= $u['id'] ?>"><?= htmlspecialchars($u['fullname']) ?></option>
+        <?php endforeach; ?>
+      </select>
+      <input type="hidden" name="lat" value="0">
+      <input type="hidden" name="lng" value="0">
+      <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
+        <button type="submit" class="save-btn">Créer</button>
+        <button type="button" class="cancel-btn">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <!-- modals de création et de carte ici (inchangés) -->
 
 <script>
@@ -205,5 +239,36 @@ document.addEventListener('DOMContentLoaded', ()=>{
       };
     }
   });
+
+  // === Bouton "Créer un projet" ===
+  const createBtn = document.getElementById('create-project-btn');
+  const createModal = document.getElementById('createProjectModal');
+  const createForm  = document.getElementById('create-form');
+  if(createBtn && createModal && createForm){
+    const closeCreate = createModal.querySelector('.modal-close');
+    const cancelCreate = createModal.querySelector('.cancel-btn');
+    function hideCreate(){ createModal.style.display='none'; }
+    function resetCreate(){
+      createModal.querySelectorAll('.emoji-item').forEach(i=>i.classList.remove('selected'));
+      createForm.reset();
+    }
+    createBtn.addEventListener('click', ()=>{
+      resetCreate();
+      createModal.style.display = 'flex';
+    });
+    closeCreate.addEventListener('click', hideCreate);
+    cancelCreate.addEventListener('click', hideCreate);
+    createModal.addEventListener('click', e=>{ if(e.target===createModal) hideCreate(); });
+
+    // Emoji pick
+    createModal.querySelectorAll('.emoji-item').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        createModal.querySelectorAll('.emoji-item').forEach(i=>i.classList.remove('selected'));
+        item.classList.add('selected');
+        createForm.querySelector('[name="emoji"]').value = item.dataset.emoji;
+      });
+    });
+  }
+
 });
 </script>
