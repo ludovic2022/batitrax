@@ -55,6 +55,7 @@ $selectedProject = $_GET['project_id'] ?? null;
         <?php
           include __DIR__ . '/inc/view_accounts.php';
           include __DIR__ . '/inc/view_projects.php';
+          include __DIR__ . '/inc/view_create_project.php';
           include __DIR__ . '/inc/view_users.php';
           include __DIR__ . '/inc/view_invoices.php';
           if ($user['role'] === 'admin') {
