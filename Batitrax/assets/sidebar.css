@@ -1,0 +1,72 @@
+/* Batitrax/assets/sidebar.css */
+
+/* Conteneur principal */
+.container {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 60px;
+  overflow-x: hidden;
+  background: var(--bg-menu);
+  transition: width 0.2s ease;
+  z-index: 1000;
+}
+.sidebar:hover {
+  width: 200px;
+}
+
+/* Wrapper contenant header + main */
+.page-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Décalage par défaut pour header & contenu */
+.page-wrapper header,
+.page-wrapper .content {
+  margin-left: 60px;
+  transition: margin-left 0.2s ease;
+}
+
+/* Décalage au survol de la sidebar */
+.sidebar:hover ~ .page-wrapper header,
+.sidebar:hover ~ .page-wrapper .content {
+  margin-left: 200px;
+}
+
+/* Menu list styling reste inchangé */
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar li {
+  margin: 16px 0;
+}
+.sidebar a.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+.sidebar a.menu-item .fas {
+  width: 24px;
+  font-size: 1.25rem;
+  text-align: center;
+}
+.sidebar a.menu-item .menu-text {
+  margin-left: 12px;
+  white-space: nowrap;
+  display: none;
+}
+.sidebar:hover a.menu-item .menu-text {
+  display: inline-block;
+}

@@ -1,5 +1,5 @@
 <?php if(!defined('BATITRAX')) exit; ?>
-<?php $isAdmin = isset($user['role']) && $user['role']==='admin'; ?>
+<?php $canManage = isset($user['role']) && in_array($user['role'], ['admin','encadrant']); ?>
 <!-- Styles -->
 <style>
   #projects-list { list-style:none; padding:0; margin:0; }
@@ -88,7 +88,7 @@
 
           <!-- Utilisateurs autorisés -->
           <div class="proj-users" data-project-id="<?= $p['id'] ?>" data-loaded="0">
-            <?php if($isAdmin): ?>
+            <?php if($canManage): ?>
               <button class="add-user-btn">+ Utilisateur</button>
             <?php endif; ?>
             <ul class="users-list"></ul>
@@ -290,6 +290,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
         reverseGeocode(lat,lng);
       });
     };
+
+      // Écouteurs modification/suppression
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = btn.parentElement.getAttribute('data-id');
+      window.location.href = '?view=projects_settings&project_id=' + id;
+    });
+  });
+      });
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = btn.parentElement.getAttribute('data-id');
+      if (confirm('Supprimer ce projet ?')) {
+        window.location.href = '?view=projects_settings&project_id=' + id + '&action=delete';
+      }
+    });
+  });
+      });
+
 
     const geocode = q=>{
       if(!q) return;

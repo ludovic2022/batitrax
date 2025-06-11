@@ -127,3 +127,178 @@ button {
   background: var(--primary);
   color: #fff;
 }
+
+
+/* Ajustement initial de la marge pour éviter chevauchement */
+.content {
+  margin-left: 60px;
+}
+
+/* Déplacement sur hover pour correspondre à la largeur */
+.sidebar:hover ~ .content {
+  margin-left: 200px;
+}
+
+
+/* Layout pour la liste des projets et le contenu dynamique */
+.content-layout {
+  display: flex;
+}
+.projects-col {
+  flex: 1;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.content-layout > main.content {
+  flex: 3;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+
+/* Décalage pour la nouvelle layout */
+.page-wrapper .content-layout {
+  margin-left: 60px;
+  transition: margin-left 0.2s ease;
+}
+.sidebar:hover ~ .page-wrapper .content-layout {
+  margin-left: 200px;
+}
+
+/* Positionnement du bouton Créer un projet en bas de la colonne */
+.projects-col {
+  position: relative;
+}
+.create-project-btn {
+  position: absolute;
+  bottom: 1rem;
+  width: calc(100% - 2rem);
+  text-align: center;
+}
+.create-project-btn .save-btn {
+  width: 100%;
+}
+
+/* ----------------------------- */
+/* Style pour la liste des projets */
+/* ----------------------------- */
+.projects-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.projects-list li {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.projects-list li:last-child {
+  border-bottom: none;
+}
+.projects-list li:hover {
+  background: #f9f9f9;
+}
+.projects-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+}
+.projects-list li a .project-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 0.5rem;
+}
+.projects-list li a .project-timestamp {
+  font-size: 0.875rem;
+  color: #888;
+}
+/* Si vous avez un badge de statut ou une icône à droite : */
+.projects-list li a .project-badge {
+  margin-left: auto;
+  font-size: 0.875rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  background: #eee;
+  color: #555;
+}
+
+/* Adresse sous le nom du projet */
+.project-address {
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Meta info under project name: label and truncated address */
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+.meta-label {
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+}
+.meta-value {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+/* Forcer le nom du projet en block afin de faire apparaître la meta sur une ligne en dessous */
+.projects-list li a .project-name {
+  display: block;
+}
+
+/* Force two-line layout: header and meta under */
+.projects-list li a {
+  display: block;
+}
+.project-header {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+.project-header .project-emoji {
+  margin-right: 0.5rem;
+}
+.project-header .project-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+.meta-label {
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+}
+.meta-value {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
