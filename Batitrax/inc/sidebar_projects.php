@@ -23,17 +23,6 @@
   <?php endforeach; ?>
 </ul>
 <div class="create-project-btn">
-  <a href="?view=projects&openModal=1" id="sideCreateBtn" class="save-btn">Créer un projetCréer un projet</a>
+  <a href="?view=create_project" id="sideCreateBtn" class="save-btn">Créer un projet</a>
 </div>
-<script>
-document.getElementById('sideCreateBtn').onclick = () => {
-  // Open the existing create project modal
-  const modal = document.getElementById('createProjectModal');
-  if(modal) {
-    resetCreate();
-    modal.style.display = 'flex';
-    setTimeout(initMap, 50);
-  }
-};
-</script>
 
